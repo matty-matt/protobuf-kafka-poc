@@ -17,7 +17,7 @@ public class MessageController {
     public void produce() {
         Message message = new Message();
         message.setContent("TEST CONTENT");
-        message.setSubject("TEST SUBJECT");
+        message.setSomeNumber(123);
         message.setReceivedDate(new Date());
         this.messageProducer.send(message);
     }
