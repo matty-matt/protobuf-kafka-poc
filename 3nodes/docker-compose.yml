@@ -55,7 +55,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: localhost:8001,localhost:8002,localhost:8003
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 172.17.0.1:8001,172.17.0.1:8002,172.17.0.1:8003
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
     depends_on:
       - zookeeper
