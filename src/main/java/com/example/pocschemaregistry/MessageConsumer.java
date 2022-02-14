@@ -1,5 +1,6 @@
 package com.example.pocschemaregistry;
 
+import com.example.simplemessage.SimpleMessageProtos;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ public class MessageConsumer {
             groupId = "test-mkociszewski-group-id",
             topics = TEST_TOPIC_NAME,
             containerFactory = "kafkaListenerContainerFactory")
-    public void consume(Message message) {
+    public void consume(SimpleMessageProtos.SimpleMessage message) {
         log.info("Read, record={}", message);
     }
 }

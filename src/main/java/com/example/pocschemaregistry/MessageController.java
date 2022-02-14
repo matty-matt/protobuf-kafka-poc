@@ -1,5 +1,6 @@
 package com.example.pocschemaregistry;
 
+import com.example.simplemessage.SimpleMessageProtos;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,10 +16,11 @@ public class MessageController {
 
     @PostMapping("/produce")
     public void produce() {
-        Message message = new Message();
-        message.setContent("TEST CONTENT");
-        message.setSomeNumber(123);
-        message.setReceivedDate(new Date());
+        SimpleMessageProtos.SimpleMessage message = SimpleMessageProtos.SimpleMessage.newBuilder()
+                .setContent("TEST CONTENT")
+                .setSomeNumber(123)
+                .setReceivedDate(new Date().toString())
+                .build();
         this.messageProducer.send(message);
     }
 }

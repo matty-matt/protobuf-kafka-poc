@@ -1,5 +1,6 @@
 package com.example.pocschemaregistry;
 
+import com.example.simplemessage.SimpleMessageProtos;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,15 +12,15 @@ import static com.example.pocschemaregistry.MessageConsumer.TEST_TOPIC_NAME;
 @Slf4j
 public class MessageProducer {
 
-    private final KafkaTemplate<String, Message> kafkaTemplate;
+    private final KafkaTemplate<String, SimpleMessageProtos.SimpleMessage> kafkaTemplate;
 
-    public MessageProducer(KafkaTemplate<String, Message> kafkaTemplate) {
+    public MessageProducer(KafkaTemplate<String, SimpleMessageProtos.SimpleMessage> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(Message message) {
+    public void send(SimpleMessageProtos.SimpleMessage message) {
         log.info("Producing message={}", message);
-        ProducerRecord<String, Message> record = new ProducerRecord<>(TEST_TOPIC_NAME, message);
+        ProducerRecord<String, SimpleMessageProtos.SimpleMessage> record = new ProducerRecord<>(TEST_TOPIC_NAME, message);
         kafkaTemplate.send(record);
     }
 }
