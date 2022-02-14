@@ -1,0 +1,36 @@
+version: '3.5'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    volumes:
+      - /home/users/mkociszewski/repositories/poc-schema-registry/data/zoo:/opt/zookeeper-3.4.13/data
+  kafka_1:
+    image: wurstmeister/kafka
+    ports:
+      - "8001:9092"
+    environment:
+      DOCKER_API_VERSION: 1.22
+      KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /home/users/mkociszewski/repositories/poc-schema-registry/data/storage1:/kafka
+      - /var/run/docker.sock:/var/run/docker.sock
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: localhost:8001
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+    depends_on:
+      - zookeeper
+      - kafka_1
+
+
+#POLECONKA
+#kafka-topics.sh --create --topic test-mkociszewski-schema-registry --zookeeper 172.17.0.1:2181 --partitions 1 --replication-factor 1
+#kafka-console-producer.sh --topic test-mkociszewski-schema-registry --broker-list 172.17.0.1:9990
+#kafka-console-consumer.sh --topic test-mkociszewski-schema-registry --bootstrap-server 172.17.0.1:9990 --from-beginning
+#docker run --rm -p 8081:8081 --name schema-registry -e SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS=localhost:9990 -e SCHEMA_REGISTRY_HOST_NAME=localhost confluentinc/cp-schema-registry
