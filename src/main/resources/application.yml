@@ -1,3 +1,5 @@
 kafka:
 #  bootstrap-address: uber.poczta.consdata.local:9092,uber.poczta.consdata.local:9093,uber.poczta.consdata.local:9094
   bootstrap-address: localhost:8001,localhost:8002,localhost:8003
+server:
+  port: 8050
